@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: face_recognition_db
+    environment:
+      POSTGRES_DB: face_recognition_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - face_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  face_db_data:
