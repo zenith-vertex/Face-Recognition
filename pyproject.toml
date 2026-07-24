@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "ai-face-recognition-system"
+version = "1.0.0"
+description = "Production-quality CLI Face Recognition System with Clean Architecture"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+    { name = "AI Face Recognition Team" }
+]
+keywords = ["face-recognition", "cli", "computer-vision", "biometrics"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = [
+    "click==8.1.7",
+    "opencv-python==4.9.0.80",
+    "face-recognition==1.3.0",
+    "numpy==1.26.4",
+    "pillow==10.3.0",
+    "pydantic==2.7.4",
+    "rich==13.7.1",
+    "python-dotenv==1.0.1",
+    "pyyaml==6.0.1",
+    "types-pyyaml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.4.0",
+    "mypy>=1.9.0",
+    "black>=24.0.0",
+    "pre-commit>=3.6.0",
+]
+test = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-mock>=3.12.0",
+]
+
+[project.scripts]
+face-recognition = "face_recognition_system.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"face_recognition_system" = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
