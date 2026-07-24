@@ -20,7 +20,7 @@ Production-quality, modular Command Line Interface application for face recognit
 The application follows **Clean Architecture** with clear separation of concerns:
 
 ```
-src/face_recognition_system/
+src/
 ├── core/                 # Domain layer (entities, ports, domain services)
 ├── application/          # Application layer (use cases/interactors)
 ├── infrastructure/       # External adapters (DB, camera, AI engine)
