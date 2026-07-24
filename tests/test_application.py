@@ -8,23 +8,23 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from application.export_logs import (
+from src.application.export_logs import (
     ExportLogsInput,
     ExportLogsUseCase,
 )
-from application.manage_users import (
+from src.application.manage_users import (
     ManageUsersUseCase,
 )
-from application.recognize import (
+from src.application.recognize import (
     RecognizeFaceUseCase,
     RecognizeInput,
 )
-from application.train_model import (
+from src.application.train_model import (
     TrainModelInput,
     TrainModelUseCase,
 )
-from core.domain.face_data import RecognitionEvent
-from core.domain.user import User
+from src.core.domain.face_data import RecognitionEvent
+from src.core.domain.user import User
 
 
 class TestManageUsersUseCase:
