@@ -13,6 +13,7 @@ from ..core.domain.exceptions import (
 from ..core.domain.user import User
 from ..core.ports.face_recognizer_port import FaceRecognizerPort
 from ..core.ports.repositories import FaceEncodingRepository, UserRepository
+from ..core.ports.storage_port import EmbeddingStoragePort
 
 logger = logging.getLogger(__name__)
 
@@ -43,10 +44,12 @@ class RegisterUserUseCase:
         user_repo: UserRepository,
         face_encoding_repo: FaceEncodingRepository,
         face_recognizer: FaceRecognizerPort,
+        embedding_storage: EmbeddingStoragePort,
     ) -> None:
         self.user_repo = user_repo
         self.face_encoding_repo = face_encoding_repo
         self.face_recognizer = face_recognizer
+        self.embedding_storage = embedding_storage
 
     def execute(self, input_data: RegisterUserInput) -> RegisterUserOutput:
         """Execute the user registration workflow.
@@ -92,13 +95,11 @@ class RegisterUserUseCase:
                     continue
 
                 encoding = encodings[0]
-                encoding_path = (
-                    Path("data/encodings") / f"user_{user.id}_face_{total_faces}.npy"
+                encoding_path = self.embedding_storage.save_encoding(
+                    user_id=user.id,
+                    encoding=encoding,
+                    suffix=f"_{total_faces}",
                 )
-                encoding_path.parent.mkdir(parents=True, exist_ok=True)
-
-                import numpy as np
-                np.save(encoding_path, encoding)
 
                 self.face_encoding_repo.add_encoding(
                     user_id=user.id,
