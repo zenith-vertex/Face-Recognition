@@ -16,12 +16,13 @@ class EmbeddingStoragePort(ABC):
     """
 
     @abstractmethod
-    def save_encoding(self, user_id: int, encoding: np.ndarray) -> Path:
+    def save_encoding(self, user_id: int, encoding: np.ndarray, suffix: str = "") -> Path:
         """Save a face encoding to disk.
 
         Args:
             user_id: The ID of the user this encoding belongs to.
             encoding: The 128-dimensional face encoding array.
+            suffix: Optional suffix to make the filename unique (e.g. "_0", "_1").
 
         Returns:
             Path to the saved encoding file.
