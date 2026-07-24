@@ -53,13 +53,13 @@ test = [
 ]
 
 [project.scripts]
-face-recognition = "face_recognition_system.main:main"
+face-recognition = "src.main:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
-"face_recognition_system" = ["py.typed"]
+"src" = ["py.typed"]
 
 [tool.ruff]
 line-length = 100

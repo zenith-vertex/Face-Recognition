@@ -7,11 +7,11 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from src.face_recognition_system.core.domain.exceptions import DatabaseError
-from src.face_recognition_system.infrastructure.embedding_storage import (
+from core.domain.exceptions import DatabaseError
+from infrastructure.embedding_storage import (
     FileSystemEmbeddingStorage,
 )
-from src.face_recognition_system.infrastructure.sqlite_repository import SQLiteRepository
+from infrastructure.sqlite_repository import SQLiteRepository
 
 
 class TestFileSystemEmbeddingStorage:

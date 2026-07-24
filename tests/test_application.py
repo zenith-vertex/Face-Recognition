@@ -8,23 +8,23 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from src.face_recognition_system.application.export_logs import (
+from application.export_logs import (
     ExportLogsInput,
     ExportLogsUseCase,
 )
-from src.face_recognition_system.application.manage_users import (
+from application.manage_users import (
     ManageUsersUseCase,
 )
-from src.face_recognition_system.application.recognize import (
+from application.recognize import (
     RecognizeFaceUseCase,
     RecognizeInput,
 )
-from src.face_recognition_system.application.train_model import (
+from application.train_model import (
     TrainModelInput,
     TrainModelUseCase,
 )
-from src.face_recognition_system.core.domain.face_data import RecognitionEvent
-from src.face_recognition_system.core.domain.user import User
+from core.domain.face_data import RecognitionEvent
+from core.domain.user import User
 
 
 class TestManageUsersUseCase:

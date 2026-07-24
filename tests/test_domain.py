@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from src.face_recognition_system.core.domain.exceptions import (
+from core.domain.exceptions import (
     CameraUnavailableError,
     DatabaseError,
     UserAlreadyExistsError,
 )
-from src.face_recognition_system.core.domain.user import User
+from core.domain.user import User
 
 
 class TestUser:

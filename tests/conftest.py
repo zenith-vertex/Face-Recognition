@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from src.face_recognition_system.infrastructure.config import Config
+from infrastructure.config import Config
 
 
 @pytest.fixture
