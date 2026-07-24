@@ -213,3 +213,15 @@ class LogRepository(ABC):
             Number of entries deleted.
         """
         pass
+
+    @abstractmethod
+    def delete_by_event_type(self, event_type: str) -> int:
+        """Delete all log entries of a given event type.
+
+        Args:
+            event_type: The event type to delete (e.g. 'unknown').
+
+        Returns:
+            Number of entries deleted.
+        """
+        pass

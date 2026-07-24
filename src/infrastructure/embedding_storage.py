@@ -25,10 +25,11 @@ class FileSystemEmbeddingStorage(EmbeddingStoragePort):
         self.base_dir = base_dir
         self.base_dir.mkdir(parents=True, exist_ok=True)
 
-    def save_encoding(self, user_id: int, encoding: np.ndarray) -> Path:
+    def save_encoding(self, user_id: int, encoding: np.ndarray, suffix: str = "") -> Path:
         """Save a face encoding to disk."""
         try:
-            encoding_path = self.base_dir / f"user_{user_id}_face.npy"
+            filename = f"user_{user_id}_face{suffix}.npy" if suffix else f"user_{user_id}_face.npy"
+            encoding_path = self.base_dir / filename
             np.save(encoding_path, encoding)
             logger.debug(f"Saved encoding to {encoding_path}")
             return encoding_path

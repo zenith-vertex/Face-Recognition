@@ -7,11 +7,11 @@ from pathlib import Path
 import numpy as np
 import pytest
 
-from core.domain.exceptions import DatabaseError
-from infrastructure.embedding_storage import (
+from src.core.domain.exceptions import DatabaseError
+from src.infrastructure.embedding_storage import (
     FileSystemEmbeddingStorage,
 )
-from infrastructure.sqlite_repository import SQLiteRepository
+from src.infrastructure.sqlite_repository import SQLiteRepository
 
 
 class TestFileSystemEmbeddingStorage:

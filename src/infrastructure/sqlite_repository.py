@@ -395,3 +395,17 @@ class SQLiteRepository(
             return cursor.rowcount
         except sqlite3.Error as e:
             raise DatabaseError(f"Failed to clear logs: {e}")
+
+    def delete_by_event_type(self, event_type: str) -> int:
+        """Delete all log entries of a given event type."""
+        try:
+            conn = self._get_connection()
+            cursor = conn.cursor()
+            cursor.execute(
+                "DELETE FROM recognition_logs WHERE event_type = ?",
+                (event_type,),
+            )
+            conn.commit()
+            return cursor.rowcount
+        except sqlite3.Error as e:
+            raise DatabaseError(f"Failed to delete logs by event type: {e}")

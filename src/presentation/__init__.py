@@ -48,6 +48,7 @@ class ServiceContainer:
             user_repo=user_repo,
             face_encoding_repo=face_encoding_repo,
             face_recognizer=face_recognizer,
+            embedding_storage=embedding_storage,
         )
         self.capture_images_use_case = CaptureImagesUseCase(
             user_repo=user_repo,

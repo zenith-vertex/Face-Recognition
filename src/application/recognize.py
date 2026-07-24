@@ -7,6 +7,7 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+import cv2
 import numpy as np
 
 from ..core.domain.face_data import RecognitionEvent
@@ -110,8 +111,6 @@ class RecognizeFaceUseCase:
         Returns:
             Tuple of (recognized_users, unknown_count, logged_events).
         """
-        import cv2
-
         temp_path = output_dir / "_temp_frame.jpg"
         output_dir.mkdir(parents=True, exist_ok=True)
         cv2.imwrite(str(temp_path), frame)
@@ -247,8 +246,6 @@ class RecognizeFaceUseCase:
         known_encodings: dict[int, list[np.ndarray]],
     ) -> RecognizeOutput:
         """Run recognition in a live camera loop."""
-        import cv2
-
         if not self.camera.is_available:
             recognized_users: list[tuple[User, float]] = []
             return RecognizeOutput(
@@ -303,8 +300,6 @@ class RecognizeFaceUseCase:
         known_encodings: dict[int, list[np.ndarray]],
     ) -> RecognizeOutput:
         """Run recognition on a single image file."""
-        import cv2
-
         image_path = input_data.image_path
         frame = cv2.imread(str(image_path))
         if frame is None:

@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from core.domain.exceptions import (
+from src.core.domain.exceptions import (
     CameraUnavailableError,
     DatabaseError,
     UserAlreadyExistsError,
 )
-from core.domain.user import User
+from src.core.domain.user import User
 
 
 class TestUser:

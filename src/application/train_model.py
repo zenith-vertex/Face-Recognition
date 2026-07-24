@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
-from pathlib import Path
 
 import numpy as np
 
@@ -95,7 +94,7 @@ class TrainModelUseCase:
             centroid = np.mean(stacked, axis=0)
 
             centroid_path = (
-                Path("data/encodings") / f"user_{user.id}_centroid.npy"
+                self.embedding_storage.base_dir / f"user_{user.id}_centroid.npy"
             )
             centroid_path.parent.mkdir(parents=True, exist_ok=True)
             np.save(centroid_path, centroid)
