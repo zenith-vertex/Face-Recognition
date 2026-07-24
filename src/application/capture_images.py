@@ -7,6 +7,8 @@ import time
 from dataclasses import dataclass
 from pathlib import Path
 
+import cv2
+
 from ..core.domain.exceptions import CameraUnavailableError, UserNotFoundError
 from ..core.domain.user import User
 from ..core.ports.camera_port import CameraPort
@@ -96,7 +98,6 @@ class CaptureImagesUseCase:
 
                 # Save frame temporarily for face detection
                 temp_path = input_data.save_dir / f"temp_{user.id}_{captured}.jpg"
-                import cv2
                 cv2.imwrite(str(temp_path), frame)
 
                 try:
@@ -111,7 +112,6 @@ class CaptureImagesUseCase:
                                 input_data.save_dir
                                 / f"user_{user.id}_{user.name.replace(' ', '_')}_{captured}_{int(time.time())}.jpg"
                             )
-                            import cv2
                             cv2.imwrite(str(final_name), frame)
 
                             encoding_path = self.embedding_storage.save_encoding(
