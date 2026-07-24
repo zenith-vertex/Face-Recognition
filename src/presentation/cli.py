@@ -15,6 +15,10 @@ import click
 from rich.console import Console
 from rich.table import Table
 
+from ..application.export_logs import ExportLogsInput
+from ..application.recognize import RecognizeInput
+from ..application.register_user import RegisterUserInput
+from ..application.train_model import TrainModelInput
 from ..core.domain.exceptions import (
     CameraUnavailableError,
     FaceRecognitionError,
@@ -98,7 +102,6 @@ def register(
             sys.exit(1)
 
         image_paths = list(images)
-        from ..application.register_user import RegisterUserInput
         input_data = RegisterUserInput(
             name=name, image_paths=image_paths, min_faces_required=min_faces
         )
@@ -192,10 +195,9 @@ def train(ctx: click.Context) -> None:
     """Train/update the face recognition model."""
     try:
         services = _get_services(ctx.parent.params.get("config"))
-        use_case = services.train_model_use_case
 
-        from ..application.train_model import TrainModelInput
-        result = use_case.execute(TrainModelInput())
+        input_data = TrainModelInput()
+        result = services.train_model_use_case.execute(input_data)
 
         console.print(f"[green]Training complete:[/green] {result.message}")
         console.print(f"[cyan]Users trained:[/cyan] {result.users_trained}")
@@ -251,7 +253,6 @@ def recognize(
         services = _get_services(ctx.parent.params.get("config"))
         use_case = services.recognize_use_case
 
-        from ..application.recognize import RecognizeInput
         input_data = RecognizeInput(
             source=source,
             image_path=image_file,
@@ -490,7 +491,6 @@ def export_logs(
         services = _get_services(ctx.parent.params.get("config"))
         use_case = services.export_logs_use_case
 
-        from ..application.export_logs import ExportLogsInput
         input_data = ExportLogsInput(
             output_path=output,
             format=format,
@@ -521,7 +521,7 @@ def clean_unknowns(ctx: click.Context) -> None:
         services = _get_services(ctx.parent.params.get("config"))
         log_repo = services.log_repo
 
-        count = log_repo.clear()
+        count = log_repo.delete_by_event_type("unknown")
         console.print(f"[green]Removed {count} unknown face entries.[/green]")
 
     except FaceRecognitionError as e:
@@ -543,7 +543,7 @@ def info(ctx: click.Context) -> None:
         log_repo = services.log_repo
 
         users = user_repo.list_all()
-        total_encodings = sum(fe.id for fe in face_encoding_repo.get_all_encodings())
+        all_encodings = face_encoding_repo.get_all_encodings()
         recent_logs = log_repo.get_recent(limit=5)
 
         console.print(f"\n[bold cyan]{services.config.app_name}[/bold cyan]")
@@ -553,7 +553,7 @@ def info(ctx: click.Context) -> None:
         console.print(f"Logs Dir: {services.config.logs_dir}")
         console.print("\n[bold]Statistics:[/bold]")
         console.print(f"  Registered users: {len(users)}")
-        console.print(f"  Total face encodings: {total_encodings}")
+        console.print(f"  Total face encodings: {len(all_encodings)}")
         console.print(f"  Recent log entries: {len(recent_logs)}")
         console.print("")
 
